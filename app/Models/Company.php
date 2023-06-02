@@ -9,23 +9,14 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Company extends Authenticatable
 {
-    use HasFactory, HasApiTokens, Notifiable;
+    use HasFactory;
 
     protected $fillable = [
         'namaPerusahaan',
         'email',
         'phone',
-        'password',
-        'nama'
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+        'address',
+        'image',
+        'user_id'
     ];
 }

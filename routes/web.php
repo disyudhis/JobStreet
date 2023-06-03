@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -20,6 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Company Controller
 Route::get('/view_settings', [CompanyController::class, 'view_settings'])->name('view_settings');
 Route::get('/dashboard_company', [CompanyController::class, 'view_dashboard'])->name('dashboard_company');
 Route::post('/store_profile', [CompanyController::class, 'storeProfile'])->name('store_profile');
@@ -28,6 +30,9 @@ Route::get('/profilePerusahaan', [CompanyController::class, 'showProfile']);
 Route::post('/tambahLowongan', [CompanyController::class, 'tambahLowongan'])->name('tambahLowongan');
 Route::get('/getLowongan', [CompanyController::class, 'getAllLowongan'])->name('getAllLowongan');
 
+
+// Client Controller
+Route::get('/getLoker', [ClientController::class, 'getLowongan'])->name('getLowongan');
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');

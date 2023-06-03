@@ -15,7 +15,7 @@ class HomeController extends Controller
         } else if ($usertype == '1') {
             return view('company.home');
         } else {
-            return view('client.home');
+            return redirect()->route('getLowongan');
         }
     }
 }

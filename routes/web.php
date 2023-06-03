@@ -25,6 +25,8 @@ Route::get('/dashboard_company', [CompanyController::class, 'view_dashboard'])->
 Route::post('/store_profile', [CompanyController::class, 'storeProfile'])->name('store_profile');
 Route::get('/data', [CompanyController::class, 'showDataPerusahaan'])->name('dataPerusahaan');
 Route::get('/profilePerusahaan', [CompanyController::class, 'showProfile']);
+Route::post('/tambahLowongan', [CompanyController::class, 'tambahLowongan'])->name('tambahLowongan');
+Route::get('/getLowongan', [CompanyController::class, 'getAllLowongan'])->name('getAllLowongan');
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');

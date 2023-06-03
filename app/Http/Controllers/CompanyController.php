@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Loker;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Yajra\DataTables\Facades\DataTables;
 use Symfony\Component\HttpFoundation\File\UploadedFile as FileUploadedFile;
 
 class CompanyController extends Controller
@@ -14,23 +16,14 @@ class CompanyController extends Controller
     /**
      * Display the registration view.
      */
-
-    public function showDataPerusahaan(Company $company)
-    {
-        $user = Auth::user();
-        $company = Company::where('user_id', $user->id)->first();
-        $dataExists = ($company !== null);
-
-        return view('company.settings', compact('dataExists'));
-    }
-
-    public function showProfile()
+    public function view_settings()
     {
         $status = DB::table('companies as c')
         ->select(
             'c.image as image',
             'c.namaPerusahaan as NP',
-            'c.alamat as alamat',
+            'c.address as address',
+            'c.email as email',
             'c.phone as phone',
             'c.created_at as created_at'
         )
@@ -38,11 +31,6 @@ class CompanyController extends Controller
         ->get();
 
         return view('company.settings', compact('status'));
-    }
-
-    public function view_settings()
-    {
-        return view('company.settings');
     }
 
     public function view_dashboard()
@@ -67,5 +55,40 @@ class CompanyController extends Controller
 
         $profile->save();
         return redirect()->back()->with('message', 'Data berhasil ditambahkan');
+    }
+
+    public function tambahLowongan(Request $request)
+    {
+        $loker = new Loker;
+        $loker->judul = $request->judul;
+        $loker->deskripsi = $request->deskripsi;
+        $loker->gaji = $request->gaji;
+        $company = Company::where('user_id', Auth::user()->id)->first();
+        $loker->companyId = $company->id;
+        $loker->save();
+        return redirect()->back()->with('message', 'Data berhasil ditambahkan');
+    }
+
+    public function getAllLowongan()
+    {
+        $lowongan = DB::table('lokers as l')
+        ->join('companies as c', 'companyId', '=', 'c.id')
+        ->select(
+            'l.id as id',
+            'c.image as logo',
+            'l.judul as judul',
+            'l.deskripsi as deskripsi',
+            'l.gaji as gaji',
+        )
+        ->orderBy('id', 'desc')
+        ->get();
+
+        return DataTables::of($lowongan)
+        ->addColumn('action', function($lowongan) {
+            $btn = '<a type="button" href="' .url('') . "/" . $lowongan->id . '" style="padding: 3px 20px" class="btn btn-primary">Edit</a>
+            <a type="button" href="' . url('') . "/" . $lowongan->id . '" style="padding: 3px 20px" class="btn btn-secondary">Hapus</a>';
+            return $btn;
+        })
+        ->make(true);
     }
 }

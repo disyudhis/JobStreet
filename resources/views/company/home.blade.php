@@ -1,32 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Company | Job Center</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="{{ asset('home/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{{ asset('home/css/sb-admin-2.min.css') }}" rel="stylesheet">
-
-</head>
+@include('company.head');
 
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        {{-- Sidebar --}}
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -74,11 +51,94 @@
             <!-- Main Content -->
             <div id="content">
 
+
                 <!-- Topbar -->
                 @include('company.topbar')
 
                 <!-- Begin Page Content -->
-                @include('company.content')
+                <div class="container-fluid">
+
+                    @if (session()->has('message'))
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Lowongan Kerja</h1>
+                        <button data-toggle="modal" data-target="#lowonganKerja"
+                            class="d-none d-sm-inline-block rounded-lg btn btn-primary btn-lg shadow-sm rounded-circle"><i
+                                class="fas fa-plus fa-xl text-white-100"></i></button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="lowonganKerja" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Lowongan</h5>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <form method="POST" action="{{ route('tambahLowongan') }}">
+                                    @csrf
+
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="judul" class="col-form-label">Judul:</label>
+                                            <input type="text" class="form-control" id="judul" name="judul"
+                                                required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="deskripsi" class="col-form-label">Deskripsi:</label>
+                                            <textarea class="form-control" id="deskripsi" name="deskripsi" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="gaji" class="col-form-label">Gaji:</label>
+                                            <input class="form-control" type="number" id="gaji" name="gaji"
+                                                required></input>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" type="button"
+                                            data-dismiss="modal">Cancel</button>
+                                        <button class="btn btn-primary" type="submit">Simpan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Data tables --}}
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered myTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Logo</th>
+                                            <th class="text-center">Judul</th>
+                                            <th class="text-center">Deskripsi</th>
+                                            <th class="text-center">Gaji</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-center">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- /.container-fluid -->
+
 
             </div>
             <!-- End of Main Content -->
@@ -86,36 +146,70 @@
             <!-- Footer -->
             @include('admin.footer')
 
+
+            <!-- End of Content Wrapper -->
+
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Page Wrapper -->
 
-    </div>
-    <!-- End of Page Wrapper -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+        <!-- Logout Modal-->
+        @include('admin.logout-modal')
 
-    <!-- Logout Modal-->
-    @include('admin.logout-modal')
+        @include('company.js')
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('home/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('home/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        {{-- script datatables --}}
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.myTable').DataTable({
+                    ajax: "{{ route('getAllLowongan') }}",
+                    processing: true,
+                    serverSide: false,
+                    fixedHeader: true,
+                    responsive: true,
+                    deferRender: true,
+                    type: 'GET',
+                    destroy: true,
+                    paging: true,
+                    columns: [{
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'logo',
+                            name: 'logo',
+                            render: function(data, type, full, meta) {
+                                return '<img src="/company/' + data + '" alt="Logo" width="100">';
+                            }
+                        },
+                        {
+                            data: 'judul',
+                            name: 'judul'
+                        },
+                        {
+                            data: 'deskripsi',
+                            name: 'deskripsi'
+                        },
+                        {
+                            data: 'gaji',
+                            name: 'gaji'
+                        },
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('home/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false
+                        }
+                    ]
 
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('home/js/sb-admin-2.min.js') }}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ asset('home/vendor/chart.js/Chart.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('home/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('home/js/demo/chart-pie-demo.js') }}"></script>
+                })
+            })
+        </script>
 
 </body>
 

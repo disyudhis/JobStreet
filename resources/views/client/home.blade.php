@@ -36,7 +36,12 @@
 
                 <!-- Topbar -->
                 @include('admin.topbar')
-
+                @if (session()->has('message'))
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
@@ -60,7 +65,8 @@
                                             {{ Str::limit($lowongan->deskripsi, 100) }}</p>
                                     </div>
                                     <div class="card-footer">
-                                        <a class="btn btn-primary" href="{{ route('') }}">Lihat</a>
+                                        <a class="btn btn-primary"
+                                            href="{{ route('lowongan.show', ['lowongan' => $lowongan->id]) }}">Lihat</a>
                                     </div>
                                 </div>
                             </div>

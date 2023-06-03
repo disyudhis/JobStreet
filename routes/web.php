@@ -33,6 +33,8 @@ Route::get('/getLowongan', [CompanyController::class, 'getAllLowongan'])->name('
 
 // Client Controller
 Route::get('/getLoker', [ClientController::class, 'getLowongan'])->name('getLowongan');
+Route::get('/lowongan/{lowongan}', [ClientController::class, 'show'])->name('lowongan.show');
+Route::post('/daftarKerja/{id}', [ClientController::class, 'daftarPerusahaan'])->name('daftarKerja');
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');

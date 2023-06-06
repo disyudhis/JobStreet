@@ -23,7 +23,7 @@
 
   </head>
 
-  <body class="bg-gradient-primary">
+  <body class="bg-gradient-success">
 
       <div class="container">
 
@@ -70,7 +70,7 @@
                                                       Me</label>
                                               </div>
                                           </div>
-                                          <button type="submit" class="btn btn-primary btn-user btn-block">
+                                          <button type="submit" class="btn btn-success btn-user btn-block">
                                               Login
                                           </button>
                                           <hr>
@@ -78,13 +78,13 @@
                                       <hr>
                                       <div class="text-center">
                                           @if (Route::has('password.request'))
-                                              <a class="small" href="{{ route('password.request') }}">Forgot
+                                              <a class="small text-success" href="{{ route('password.request') }}">Forgot
                                                   Password?</a>
                                           @endif
 
                                       </div>
                                       <div class="text-center">
-                                          <a class="small" href="{{ route('register') }}">Create an Account!</a>
+                                          <a class="small text-success" href="{{ route('register') }}">Create an Account!</a>
                                       </div>
                                   </div>
                               </div>

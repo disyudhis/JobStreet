@@ -21,6 +21,7 @@ class ClientController extends Controller
             'c.address as alamat',
             'l.deskripsi as deskripsi',
             'l.gaji as gaji',
+            'l.updated_at as update'
         )
         ->orderBy('id', 'desc')
         ->get();

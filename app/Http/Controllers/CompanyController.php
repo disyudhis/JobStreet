@@ -16,9 +16,10 @@ class CompanyController extends Controller
     /**
      * Display the registration view.
      */
-    public function view_settings($id)
+    public function view_settings(Company $companies)
     {
-        $status = DB::table('companies as c')
+        // $companies = Company::get();
+        $companies = DB::table('companies as c')
             ->select(
                 'c.id as id',
                 'c.user_id as user_id',
@@ -29,10 +30,10 @@ class CompanyController extends Controller
                 'c.phone as phone',
                 'c.created_at as created_at'
             )
-            ->where('c.user_id', '=', $id)
+            ->where('c.user_id', '=', auth()->user()->id)
             ->first();
 
-        return view('company.settings', compact('status'));
+        return view('company.settings', compact('companies'));
     }
 
     public function view_dashboard()
@@ -55,6 +56,7 @@ class CompanyController extends Controller
             $profile->image = $imagename;
         }
 
+      
         $profile->save();
         return redirect()->back()->with('message', 'Data berhasil ditambahkan');
     }

@@ -9,7 +9,8 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard_company', auth()->user()->id) }}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"
+                href="{{ route('dashboard_company', auth()->user()->id) }}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-industry"></i>
                 </div>
@@ -105,7 +106,7 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="image" class="col-form-label">Logo Perusahaan :</label>
-                                            <input class="form-control" type="file" id="image" name="image"
+                                            <input class="form-control" type="file" id="image" name="image" accept=".jpg,.jpeg,.png"
                                                 required></input>
                                         </div>
                                     </div>
@@ -121,7 +122,7 @@
 
 
                     {{-- Profil Perusahaan --}}
-                    @if ($status->id == null)
+                    @if ($companies === null)
                         <!-- Page Heading -->
 
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -140,7 +141,7 @@
                             <h1 class="h3 mb-0 text-gray-800">Data Perusahaan</h1>
 
                             <button data-toggle="modal" data-target="#lowonganKerja"
-                                class="d-none d-sm-inline-block rounded-lg btn btn-outline-primary rounded-circle btn-lg shadow-sm" disabled><i
+                                class="d-none d-sm-inline-block rounded-lg btn btn-primary rounded-circle btn-lg shadow-sm" disabled><i
                                     class="fas fa-plus fa-xl text-white-100"></i></button>
 
                         </div>
@@ -153,24 +154,24 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6 mb-4">
-                                                <img src="/company/{{ $status->image }}" alt="logo"
+                                                <img src="/company/{{ $companies->image }}" alt="logo"
                                                     style="width: 100%; max-height: 20rem; object-fit: cover; object-position: center"
                                                     class="rounded-circle">
                                             </div>
                                             <div class="col-md-6">
                                                 <h4>Nama Perusahaan</h4>
-                                                <p>{{ $status->NP }}</p>
+                                                <p>{{ $companies->NP }}</p>
                                                 <h4>Alamat</h4>
-                                                <p>{{ $status->address }}</p>
+                                                <p>{{ $companies->address }}</p>
                                                 <h4>Email</h4>
-                                                <p>{{ $status->email }}</p>
+                                                <p>{{ $companies->email }}</p>
                                                 <h4>Telepon</h4>
-                                                <p>{{ $status->phone }}</p>
+                                                <p>{{ $companies->phone }}</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <p>{{ $status->created_at }}</p>
+                                        <p>{{ $companies->created_at }}</p>
                                     </div>
                                 </div>
                             </div>

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->bigInteger('userId')->unsigned()->index();
             $table->foreign('userId')->references('id')->on('users')->cascadeOnDelete();
             $table->string('cv');
+            $table->bigInteger('lokerId')->unsigned()->index();
+            $table->foreign('lokerId')->references('id')->on('lokers')->cascadeOnDelete();
             $table->timestamps();
         });
     }

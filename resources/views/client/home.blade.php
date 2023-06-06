@@ -8,7 +8,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('getLowongan') }}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fa fa-laptop"></i>
                 </div>
@@ -20,7 +20,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('getLowongan') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -50,7 +50,7 @@
                             <div class="col mb-4">
                                 <div class="card">
                                     <img src="/company/{{ $lowongan->logo }}" class="card-img-top" alt="logo"
-                                        style="max-height: 200px; object-fit: cover; object-position: center;">
+                                        style="height: 200px; object-fit: cover; object-position: center;">
                                     <div class="card-body">
                                         <h5 class="card-title" style="font-family: sans-serif; color:black">
                                             <strong>{{ $lowongan->judul }}</strong>

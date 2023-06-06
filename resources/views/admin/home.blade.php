@@ -27,7 +27,31 @@
     <div id="wrapper">
 
         {{-- Sidebar --}}
-        @include('admin.sidebar')
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">Admin</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+
+        </ul>
+        <!-- End of Sidebar -->
+
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -39,7 +63,17 @@
                 @include('admin.topbar')
 
                 <!-- Begin Page Content -->
-                @include('admin.content')
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800"></h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-xl btn-primary shadow-sm"><i
+                                class="fas fa-plus fa-xl text-white-100"></i></a>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->

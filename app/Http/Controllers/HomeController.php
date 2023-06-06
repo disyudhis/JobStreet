@@ -13,7 +13,7 @@ class HomeController extends Controller
         if ($usertype == '2') {
             return view('admin.home');
         } else if ($usertype == '1') {
-            return view('company.home');
+            return redirect()->route('dashboard_company', auth()->user()->id);
         } else {
             return redirect()->route('getLowongan');
         }

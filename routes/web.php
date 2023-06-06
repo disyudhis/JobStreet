@@ -5,6 +5,7 @@ use App\Http\Controllers\CompanyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Company;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,13 +23,16 @@ Route::get('/', function () {
 });
 
 // Company Controller
-Route::get('/view_settings', [CompanyController::class, 'view_settings'])->name('view_settings');
-Route::get('/dashboard_company', [CompanyController::class, 'view_dashboard'])->name('dashboard_company');
-Route::post('/store_profile', [CompanyController::class, 'storeProfile'])->name('store_profile');
+Route::get('/view_settings/{id}', [CompanyController::class, 'view_settings'])->name('view_settings');
+Route::get('/dashboard_company/{id}', [CompanyController::class, 'view_dashboard'])->name('dashboard_company');
+Route::post('/store_profile/{id}', [CompanyController::class, 'storeProfile'])->name('store_profile');
 Route::get('/data', [CompanyController::class, 'showDataPerusahaan'])->name('dataPerusahaan');
 Route::get('/profilePerusahaan', [CompanyController::class, 'showProfile']);
 Route::post('/tambahLowongan', [CompanyController::class, 'tambahLowongan'])->name('tambahLowongan');
 Route::get('/getLowongan', [CompanyController::class, 'getAllLowongan'])->name('getAllLowongan');
+Route::get('/destroy/{id}', [CompanyController::class, 'destroy'])->name('destroy');
+Route::get('/edit/{loker}', [CompanyController::class, 'edit'])->name('edit');
+Route::post('/update/{loker}', [CompanyController::class, 'update'])->name('update');
 
 
 // Client Controller

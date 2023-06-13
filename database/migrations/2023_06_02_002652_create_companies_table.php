@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('namaPerusahaan');
             $table->string('email')->unique();
             $table->string('phone')->nullable();
-            $table->string('address')->nullable();
+            $table->text('address');
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('image', 2048)->nullable();

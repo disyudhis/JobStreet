@@ -20,15 +20,15 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('dashboard_company', auth()->user()->id) }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
             {{-- Nav Item - Applicant --}}
-            <li class="nav-item">
-                <a href="{{ route('applicant', auth()->user()->id) }}" class="nav-link">
+            <li class="nav-item active">
+                <a href="" class="nav-link">
                     <i class="fas fa-fw fa-user-circle"></i>
                     <span>Pendaftar</span>
                 </a>
@@ -76,50 +76,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Lowongan Kerja</h1>
-                        <button data-toggle="modal" data-target="#lowonganKerja"
-                            class="d-none d-sm-inline-block rounded-lg btn btn-primary btn-lg shadow-sm rounded-circle"><i
-                                class="fas fa-plus fa-xl text-white-100"></i></button>
-                    </div>
-
-                    <!-- Modal Tambah data-->
-                    <div class="modal fade" id="lowonganKerja" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Tambah Data Lowongan</h5>
-                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
-                                    </button>
-                                </div>
-                                <form method="POST" action="{{ route('tambahLowongan') }}">
-                                    @csrf
-
-                                    <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label for="judul" class="col-form-label">Judul:</label>
-                                            <input type="text" class="form-control" id="judul" name="judul"
-                                                required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="deskripsi" class="col-form-label">Deskripsi:</label>
-                                            <textarea class="form-control" id="deskripsi" name="deskripsi" required></textarea>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="gaji" class="col-form-label">Gaji:</label>
-                                            <input class="form-control" type="number" id="gaji" name="gaji"
-                                                required></input>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary" type="button"
-                                            data-dismiss="modal">Cancel</button>
-                                        <button class="btn btn-primary" type="submit">Simpan</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                        <h1 class="h3 mb-0 text-gray-800">Pendaftar</h1>
                     </div>
 
                     {{-- Data tables --}}
@@ -130,10 +87,9 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">No</th>
-                                            <th class="text-center">Logo</th>
+                                            <th class="text-center">Nama</th>
                                             <th class="text-center">Judul</th>
-                                            <th class="text-center">Deskripsi</th>
-                                            <th class="text-center">Gaji</th>
+                                            <th class="text-center">CV</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -174,7 +130,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('.myTable').DataTable({
-                ajax: "{{ route('getAllLowongan') }}",
+                ajax: "{{ route('getApplicant') }}",
                 processing: true,
                 serverSide: false,
                 fixedHeader: true,
@@ -191,23 +147,19 @@
                         }
                     },
                     {
-                        data: 'logo',
-                        name: 'logo',
-                        render: function(data, type, full, meta) {
-                            return '<img src="/company/' + data + '" alt="Logo" width="100">';
-                        }
+                        data: 'name',
+                        name: 'nama',
                     },
                     {
                         data: 'judul',
                         name: 'judul'
                     },
                     {
-                        data: 'deskripsi',
-                        name: 'deskripsi'
-                    },
-                    {
-                        data: 'gaji',
-                        name: 'gaji'
+                        data: 'cv',
+                        name: 'cv',
+                        render: function(data, type, full, meta) {
+                            return '<a href="' + data + '" target="_blank" type="application/pdf">Lihat CV</a>';
+                        }
                     },
 
                     {

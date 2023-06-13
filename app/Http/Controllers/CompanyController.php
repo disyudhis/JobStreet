@@ -7,6 +7,7 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Candidate;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use Symfony\Component\HttpFoundation\File\UploadedFile as FileUploadedFile;
@@ -56,7 +57,7 @@ class CompanyController extends Controller
             $profile->image = $imagename;
         }
 
-      
+
         $profile->save();
         return redirect()->back()->with('message', 'Data berhasil ditambahkan');
     }
@@ -127,5 +128,47 @@ class CompanyController extends Controller
         ]);
 
         return redirect()->route('dashboard_company', auth()->user()->id)->with('message', "Data berhasil ditambahkan");
+    }
+
+    public function showApplicant()
+    {
+        return view('company.applicant');
+    }
+
+    public function getApplicant()
+    {
+        $company = Company::where('user_id', Auth::user()->id)->first();
+        $candidate = DB::table('candidates as c')
+            ->join('users as u', 'c.userId', '=', 'u.id')
+            ->join('lokers as l', 'c.lokerId', '=', 'l.id')
+            ->select(
+                'c.id as id',
+                'c.userId as userId',
+                'c.cv as cv',
+                'c.lokerId as lokerId',
+                'u.name as name',
+                'l.judul as judul',
+                'l.companyId as companyId',
+                'c.created_at as tanggal'
+            )
+            ->where('l.companyId', '=', $company->id)
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
+        return DataTables::of($candidate)
+            ->addColumn('action', function ($candidate) {
+                $btn = '
+            <a type="button" href="' . url('hapusApplier') . "/" . $candidate->id . '" style="padding: 3px 20px" class="btn btn-secondary">Hapus</a>';
+                return $btn;
+            })
+            ->make(true);
+    }
+
+    
+    public function hapusApplier($id)
+    {
+        $candidate = DB::table('candidates')->where('id', $id)->delete();
+
+        return redirect()->route('applicant', auth()->user()->id)->with('message', "Data Berhasil dihapus");
     }
 }

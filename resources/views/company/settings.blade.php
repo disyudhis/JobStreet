@@ -27,6 +27,14 @@
                     <span>Dashboard</span></a>
             </li>
 
+            {{-- Nav Item - Applicant --}}
+            <li class="nav-item">
+                <a href="{{ route('applicant', auth()->user()->id) }}" class="nav-link">
+                    <i class="fas fa-fw fa-user-circle"></i>
+                    <span>Pendaftar</span>
+                </a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -106,8 +114,8 @@
                                         </div>
                                         <div class="mb-3">
                                             <label for="image" class="col-form-label">Logo Perusahaan :</label>
-                                            <input class="form-control" type="file" id="image" name="image" accept=".jpg,.jpeg,.png"
-                                                required></input>
+                                            <input class="form-control" type="file" id="image" name="image"
+                                                accept=".jpg,.jpeg,.png" required></input>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -141,8 +149,8 @@
                             <h1 class="h3 mb-0 text-gray-800">Data Perusahaan</h1>
 
                             <button data-toggle="modal" data-target="#lowonganKerja"
-                                class="d-none d-sm-inline-block rounded-lg btn btn-primary rounded-circle btn-lg shadow-sm" disabled><i
-                                    class="fas fa-plus fa-xl text-white-100"></i></button>
+                                class="d-none d-sm-inline-block rounded-lg btn btn-primary rounded-circle btn-lg shadow-sm"
+                                disabled><i class="fas fa-plus fa-xl text-white-100"></i></button>
 
                         </div>
                         <div class="row mb-4">

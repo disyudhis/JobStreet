@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <button class="btn btn-success" data-toggle="modal"
-                                        data-target="#daftarKerja">Daftar Perusahaan</button>
+                                        data-target="#daftarKerja">Lamar Pekerjaan</button>
                                 </div>
                             </div>
                         </div>

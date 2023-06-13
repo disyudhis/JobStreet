@@ -33,6 +33,9 @@ Route::get('/getLowongan', [CompanyController::class, 'getAllLowongan'])->name('
 Route::get('/destroy/{id}', [CompanyController::class, 'destroy'])->name('destroy');
 Route::get('/edit/{loker}', [CompanyController::class, 'edit'])->name('edit');
 Route::post('/update/{loker}', [CompanyController::class, 'update'])->name('update');
+Route::get('/applicant/{id}', [CompanyController::class, 'showApplicant'])->name('applicant');
+Route::get('/getApplicant', [CompanyController::class, 'getApplicant'])->name('getApplicant');
+Route::get('/hapusApplier/{id}', [CompanyController::class, 'hapusApplier'])->name('hapusApplier');
 
 
 // Client Controller

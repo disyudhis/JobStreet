@@ -1,37 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Admin | Job Center</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="{{ asset('home/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{{ asset('home/css/sb-admin-2.min.css') }}" rel="stylesheet">
-
-</head>
+@include('admin.head')
 
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        {{-- Sidebar --}}
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-lock"></i>
                 </div>
@@ -43,9 +20,19 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('user') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('loker') }}">
+                    <i class="fas fa-fw fa-newspaper"></i>
+                    <span>Lowongan Pekerjaan</span></a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('kandidat') }}">
+                    <i class="fas fa-fw fa-person"></i>
+                    <span>Pelamar Kerja</span></a>
             </li>
 
 
@@ -65,11 +52,33 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800"></h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-xl btn-primary shadow-sm"><i
-                                class="fas fa-plus fa-xl text-white-100"></i></a>
+                    @if (session()->has('message'))
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+                            {{ session()->get('message') }}
+                        </div>
+                    @endif
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Data Pengguna</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered myTable" id="dataTable" width="100%"
+                                    cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Name</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center">Type</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -96,21 +105,50 @@
     @include('admin.logout-modal')
 
     <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('home/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('home/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    @include('admin.script')
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('home/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.myTable').DataTable({
+                ajax: "{{ route('showUser') }}",
+                processing: true,
+                serverSide: false,
+                fixedHeader: true,
+                responsive: true,
+                deferRender: true,
+                type: 'GET',
+                destroy: true,
+                paging: true,
+                columns: [{
+                        data: null,
+                        name: 'id',
+                        render: function(data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        data: 'nama',
+                        name: 'name',
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'usertype',
+                        name: 'usertype'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
 
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('home/js/sb-admin-2.min.js') }}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ asset('home/vendor/chart.js/Chart.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('home/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('home/js/demo/chart-pie-demo.js') }}"></script>
+            })
+        })
+    </script>
 
 </body>
 

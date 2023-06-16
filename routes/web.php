@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CompanyController;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,17 @@ Route::get('/hapusApplier/{id}', [CompanyController::class, 'hapusApplier'])->na
 Route::get('/getLoker', [ClientController::class, 'getLowongan'])->name('getLowongan');
 Route::get('/lowongan/{lowongan}', [ClientController::class, 'show'])->name('lowongan.show');
 Route::post('/daftarKerja/{id}', [ClientController::class, 'daftarPerusahaan'])->name('daftarKerja');
+
+// Admin Controller
+Route::get('/showUsers', [AdminController::class, 'showUsers'])->name('showUser');
+Route::get('/hapusUser/{id}', [AdminController::class, 'hapusUser'])->name('hapusUser');
+Route::get('/user', [AdminController::class, 'admin_user'])->name('user');
+Route::get('/showLoker', [AdminController::class, 'showLoker'])->name('showLoker');
+Route::get('/hapusLoker/{id}', [AdminController::class, 'hapusLoker'])->name('hapusLoker');
+Route::get('/loker', [AdminController::class, 'admin_loker'])->name('loker');
+Route::get('/kandidat', [AdminController::class, 'admin_kandidat'])->name('kandidat');
+Route::get('/showCandidates', [AdminController::class, 'showKandidat'])->name('showKandidat');
+Route::get('/hapusKandidat/{id}', [AdminController::class, 'hapusKandidat'])->name('hapusKandidat');
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');

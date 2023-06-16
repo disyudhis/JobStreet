@@ -1,54 +1,42 @@
-@include('company.head');
+@include('admin.head')
 
 <body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
 
+        {{-- Sidebar --}}
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center"
-                href="{{ route('dashboard_company', auth()->user()->id) }}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-industry"></i>
+                    <i class="fas fa-lock"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Company</div>
+                <div class="sidebar-brand-text mx-3">Admin</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard_company', auth()->user()->id) }}">
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('user') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
 
-            {{-- Nav Item - Applicant --}}
-            <li class="nav-item active">
-                <a href="" class="nav-link">
-                    <i class="fas fa-fw fa-user-circle"></i>
-                    <span>Pendaftar</span>
-                </a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Settings
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('view_settings', auth()->user()->id) }}">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Profil Perusahaan</span>
-                </a>
+                <a class="nav-link" href="{{ route('loker') }}">
+                    <i class="fas fa-fw fa-newspaper"></i>
+                    <span>Lowongan Pekerjaan</span></a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ route('kandidat') }}">
+                    <i class="fas fa-fw fa-person"></i>
+                    <span>Pelamar Kerja</span></a>
+            </li>
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -60,9 +48,8 @@
             <!-- Main Content -->
             <div id="content">
 
-
                 <!-- Topbar -->
-                @include('company.topbar')
+                @include('admin.topbar')
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
@@ -74,36 +61,31 @@
                         </div>
                     @endif
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Pendaftar</h1>
-                    </div>
-
-                    {{-- Data tables --}}
                     <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Data Lowongan Pekerjaan</h6>
+                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered myTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered myTable" id="dataTable" width="100%"
+                                    cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th class="text-center">No</th>
                                             <th class="text-center">Nama</th>
+                                            <th class="text-center">Nama Perusahaan</th>
                                             <th class="text-center">Judul</th>
                                             <th class="text-center">CV</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody class="text-center">
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 
-
                 </div>
                 <!-- /.container-fluid -->
-
 
             </div>
             <!-- End of Main Content -->
@@ -113,6 +95,7 @@
 
         </div>
         <!-- End of Content Wrapper -->
+
     </div>
     <!-- End of Page Wrapper -->
 
@@ -124,15 +107,15 @@
     <!-- Logout Modal-->
     @include('admin.logout-modal')
 
-    @include('company.js')
+    <!-- Bootstrap core JavaScript-->
+    @include('admin.script')
 
-    {{-- script datatables --}}
     <script type="text/javascript">
         $(document).ready(function() {
             $('.myTable').DataTable({
-                ajax: "{{ route('getApplicant') }}",
+                ajax: "{{ route('showKandidat') }}",
                 processing: true,
-                serverSide: true,
+                serverSide: false,
                 fixedHeader: true,
                 responsive: true,
                 deferRender: true,
@@ -148,7 +131,11 @@
                     },
                     {
                         data: 'name',
-                        name: 'nama',
+                        name: 'name'
+                    },
+                    {
+                        data: 'NP',
+                        name: 'NP'
                     },
                     {
                         data: 'judul',
@@ -161,7 +148,6 @@
                             return '<a href="/pdf/' + data + '" download>Unduh CV</a>';
                         }
                     },
-
                     {
                         data: 'action',
                         name: 'action',

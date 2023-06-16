@@ -76,7 +76,6 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Lowongan Kerja</h1>
                         <button data-toggle="modal" data-target="#lowonganKerja"
                             class="d-none d-sm-inline-block rounded-lg btn btn-primary btn-lg shadow-sm rounded-circle"><i
                                 class="fas fa-plus fa-xl text-white-100"></i></button>
@@ -124,9 +123,13 @@
 
                     {{-- Data tables --}}
                     <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Data Lowongan Pekerjaan</h6>
+                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered myTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered myTable" width="100%" id="dataTable"
+                                    cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th class="text-center">No</th>
